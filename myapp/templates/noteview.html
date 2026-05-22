@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Note View - MCA NotesHub</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
+
+body{
+  background:#f3f4f6;
+  color:#111827;
+  min-height:100vh;
+}
+
+
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:18px 30px;
+
+  background:white;
+
+  border-bottom:1px solid #d1d5db;
+
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.header h2{
+  font-size:26px;
+  color:#111827;
+}
+
+.back-btn{
+  text-decoration:none;
+  background:#374151;
+  color:white;
+
+  padding:10px 16px;
+
+  border-radius:8px;
+
+  font-weight:600;
+
+  transition:0.3s;
+}
+
+.back-btn:hover{
+  opacity:0.9;
+}
+
+
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:25px;
+}
+
+
+
+.note-card{
+  background:white;
+
+  border:1px solid #d1d5db;
+
+  border-radius:14px;
+
+  padding:25px;
+
+  margin-bottom:20px;
+}
+
+
+.note-info h1{
+  font-size:30px;
+  margin-bottom:10px;
+  color:#111827;
+}
+
+.note-info p{
+  color:#6b7280;
+  font-size:15px;
+  margin-bottom:5px;
+}
+
+
+
+.actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+
+  margin:20px 0;
+}
+
+.actions button,
+.actions a{
+  padding:10px 16px;
+
+  border:none;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  text-decoration:none;
+
+  font-weight:600;
+
+  transition:0.3s;
+}
+
+.download{
+  background:#374151;
+  color:white;
+}
+
+.save{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+.actions button:hover,
+.actions a:hover{
+  opacity:0.9;
+}
+
+
+
+.viewer-box{
+  background:white;
+
+  border:1px solid #d1d5db;
+
+  border-radius:14px;
+
+  overflow:hidden;
+
+  margin-bottom:25px;
+}
+
+.viewer{
+  width:100%;
+  height:600px;
+  border:none;
+}
+
+
+
+.comments{
+  background:white;
+
+  border:1px solid #d1d5db;
+
+  border-radius:14px;
+
+  padding:25px;
+}
+
+.comments h2{
+  margin-bottom:20px;
+  color:#111827;
+}
+
+
+
+.comment-box textarea{
+  width:100%;
+
+  padding:14px;
+
+  border-radius:10px;
+
+  border:1px solid #d1d5db;
+
+  background:#f9fafb;
+
+  color:#111827;
+
+  outline:none;
+
+  resize:none;
+}
+
+.comment-box textarea:focus{
+  border-color:#6b7280;
+}
+
+.comment-box button{
+  margin-top:10px;
+
+  padding:10px 16px;
+
+  background:#374151;
+
+  color:white;
+
+  border:none;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  font-weight:600;
+
+  transition:0.3s;
+}
+
+.comment-box button:hover{
+  opacity:0.9;
+}
+
+
+
+.comment{
+  background:#f9fafb;
+
+  border:1px solid #e5e7eb;
+
+  padding:14px;
+
+  border-radius:10px;
+
+  margin-top:15px;
+}
+
+.comment p{
+  margin-bottom:8px;
+  line-height:1.6;
+}
+
+.comment small{
+  color:#6b7280;
+}
+
+
+
+@media(max-width:768px){
+
+  .header{
+    flex-direction:column;
+    gap:12px;
+    text-align:center;
+  }
+
+  .container{
+    padding:15px;
+  }
+
+  .viewer{
+    height:400px;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .actions button,
+  .actions a{
+    width:100%;
+    text-align:center;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+  <h2>📘 Note View</h2>
+
+  <a
+    href="{% url 'student_dashboard' %}"
+    class="back-btn"
+  >
+    ← Back
+  </a>
+
+</div>
+
+<div class="container">
+
+  <!-- Note Info -->
+
+  <div class="note-card">
+
+    <div class="note-info">
+
+      <h1>
+        DBMS Complete Notes
+      </h1>
+
+      <p>
+         Uploaded by: Prof. Sharma
+      </p>
+
+      <p>
+         Semester: Sem 2
+      </p>
+
+      <p>
+         Subject: DBMS
+      </p>
+
+    </div>
+
+    
+
+    <div class="actions">
+
+      <button class="download">
+        Download
+      </button>
+
+      <button class="save">
+        Save Note
+      </button>
+
+    </div>
+
+  </div>
+
+  
+
+  <div class="viewer-box">
+
+    <iframe
+      class="viewer"
+      src="sample.pdf"
+    ></iframe>
+
+  </div>
+
+  
+
+  <div class="comments">
+
+    <h2>
+       Discussion
+    </h2>
+
+    <div class="comment-box">
+
+      <textarea
+        id="commentInput"
+        rows="4"
+        placeholder="Write your comment..."
+      ></textarea>
+
+      <button onclick="addComment()">
+        Post Comment
+      </button>
+
+    </div>
+
+    <div id="commentList">
+
+      <div class="comment">
+
+        <p>
+          Very helpful notes!
+        </p>
+
+        <small>
+          Rahul • 2 hrs ago
+        </small>
+
+      </div>
+
+      <div class="comment">
+
+        <p>
+          Thank you sir, this solved my DBMS doubts.
+        </p>
+
+        <small>
+          Priya • Yesterday
+        </small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+function addComment(){
+
+  const input =
+  document.getElementById("commentInput");
+
+  const text =
+  input.value.trim();
+
+  if(!text){
+
+    return;
+
+  }
+
+  const div =
+  document.createElement("div");
+
+  div.className = "comment";
+
+  div.innerHTML = `
+
+    <p>${text}</p>
+
+    <small>
+      You • just now
+    </small>
+
+  `;
+
+  document
+  .getElementById("commentList")
+  .prepend(div);
+
+  input.value = "";
+
+}
+
+</script>
+
+</body>
+</html>

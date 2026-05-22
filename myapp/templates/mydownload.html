@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>My Downloads - MCA NotesHub</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI",sans-serif;
+}
+
+body{
+background:#f3f4f6;
+color:#111827;
+display:flex;
+}
+
+
+
+.sidebar{
+
+width:240px;
+
+height:100vh;
+
+background:white;
+
+padding:80px 20px 20px;
+
+border-right:1px solid #d1d5db;
+
+position:fixed;
+
+left:0;
+top:0;
+
+}
+
+.sidebar h2{
+
+font-size:28px;
+
+margin-bottom:30px;
+
+}
+
+.sidebar a{
+
+display:block;
+
+padding:12px;
+
+margin:10px 0;
+
+border-radius:8px;
+
+text-decoration:none;
+
+color:#4b5563;
+
+transition:.3s;
+
+}
+
+.sidebar a:hover{
+
+background:#e5e7eb;
+
+}
+
+.sidebar a.active{
+
+background:#0f172a;
+
+color:white;
+
+font-weight:600;
+
+}
+
+
+
+.main{
+
+margin-left:240px;
+
+padding:25px;
+
+width:100%;
+
+}
+
+
+
+.topbar{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+}
+
+.header-actions{
+
+display:flex;
+
+gap:10px;
+
+}
+
+.profile-btn{
+
+background:#0f172a;
+
+color:white;
+
+padding:10px 16px;
+
+border-radius:8px;
+
+text-decoration:none;
+
+font-weight:600;
+
+}
+
+.logout-btn{
+
+background:#ef4444;
+
+color:white;
+
+padding:10px 16px;
+
+border-radius:8px;
+
+text-decoration:none;
+
+font-weight:600;
+
+}
+
+
+
+.stats{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+.card{
+
+background:white;
+
+padding:20px;
+
+border-radius:12px;
+
+border:1px solid #d1d5db;
+
+}
+
+.card h3{
+
+color:#6b7280;
+
+margin-bottom:10px;
+
+}
+
+.card p{
+
+font-size:24px;
+
+font-weight:bold;
+
+}
+
+
+
+.filters{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(220px,1fr));
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+.filters input,
+.filters select{
+
+padding:14px;
+
+border:1px solid #d1d5db;
+
+border-radius:10px;
+
+background:white;
+
+outline:none;
+
+}
+
+
+
+.note-item{
+
+background:white;
+
+border:1px solid #d1d5db;
+
+border-radius:12px;
+
+padding:20px;
+
+margin-bottom:15px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:flex-start;
+
+gap:20px;
+
+flex-wrap:wrap;
+
+}
+
+.note-info h3{
+
+font-size:22px;
+
+margin-bottom:10px;
+
+}
+
+.note-info p{
+
+color:#6b7280;
+
+margin-bottom:8px;
+
+}
+
+
+
+.actions{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+align-items:flex-start;
+
+}
+
+.actions a,
+.actions button{
+
+padding:12px 16px;
+
+border:none;
+
+border-radius:8px;
+
+text-decoration:none;
+
+font-weight:600;
+
+cursor:pointer;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+min-height:45px;
+
+}
+
+.view{
+
+background:#e5e7eb;
+
+color:#111827;
+
+}
+
+.download{
+
+background:#0f172a;
+
+color:white;
+
+}
+
+.remove{
+
+background:#ef4444;
+
+color:white;
+
+}
+
+.empty{
+
+background:white;
+
+padding:50px;
+
+border-radius:12px;
+
+text-align:center;
+
+border:1px solid #d1d5db;
+
+}
+
+
+
+@media(max-width:768px){
+
+.sidebar{
+
+display:none;
+
+}
+
+.main{
+
+margin-left:0;
+
+padding:15px;
+
+}
+
+.note-item{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.actions{
+
+width:100%;
+
+}
+
+.actions a,
+.actions button{
+
+flex:1;
+
+min-width:120px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<div class="sidebar">
+
+<h2>
+NotesHub
+</h2>
+
+<a
+href="{% url 'student_dashboard' %}"
+>
+Dashboard
+</a>
+
+<a
+href="{% url 'my_downloads' %}"
+class="active"
+>
+My Downloads
+</a>
+
+<a
+href="{% url 'notifications' %}"
+>
+Notifications
+</a>
+
+<a
+href="{% url 'profile' %}"
+>
+Profile
+</a>
+
+<a
+href="{% url 'logout' %}"
+>
+Logout
+</a>
+
+</div>
+
+
+
+<div class="main">
+
+<div class="topbar">
+
+<h1>
+My Downloads
+</h1>
+
+<div class="header-actions">
+
+<a
+href="{% url 'profile' %}"
+class="profile-btn"
+>
+Profile
+</a>
+
+<a
+href="{% url 'logout' %}"
+class="logout-btn"
+>
+Logout
+</a>
+
+</div>
+
+</div>
+
+
+
+<div class="stats">
+
+<div class="card">
+
+<h3>
+Total Downloads
+</h3>
+
+<p>
+{{ downloads.count }}
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Student
+</h3>
+
+<p>
+{{ request.user.username }}
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>
+Semester
+</h3>
+
+<p>
+{{ request.user.student.semester }}
+</p>
+
+</div>
+
+</div>
+
+
+
+<div class="filters">
+
+<input
+id="search"
+type="text"
+placeholder="Search downloads..."
+>
+
+<select id="semester">
+
+<option value="">
+All Semester
+</option>
+
+<option>Sem 1</option>
+<option>Sem 2</option>
+<option>Sem 3</option>
+<option>Sem 4</option>
+
+</select>
+
+<select id="subject">
+
+<option value="">
+All Subject
+</option>
+
+<option>DBMS</option>
+<option>Java</option>
+<option>Python</option>
+
+</select>
+
+</div>
+
+
+
+{% for download in downloads %}
+
+<div
+class="note-item"
+
+data-title="{{ download.note.title|lower }}"
+
+data-sem="{{ download.note.semester }}"
+
+data-sub="{{ download.note.subject }}"
+>
+
+<div class="note-info">
+
+<h3>
+{{ download.note.title }}
+</h3>
+
+<p>
+Subject:
+{{ download.note.subject }}
+</p>
+
+<p>
+Semester:
+{{ download.note.semester }}
+</p>
+
+<p>
+Uploaded By:
+{{ download.note.teacher.username }}
+</p>
+
+<p>
+Downloaded:
+{{ download.downloaded_at }}
+</p>
+
+</div>
+
+<div class="actions">
+
+<a
+href="{{ download.note.file.url }}"
+target="_blank"
+class="view"
+>
+View
+</a>
+
+<a
+href="{% url 'download_note' download.note.id %}"
+class="download"
+>
+Download Again
+</a>
+
+<button
+class="remove"
+onclick="
+this.closest(
+'.note-item'
+).remove()
+"
+>
+
+Remove
+
+</button>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="empty">
+
+<h2>
+No Downloads Yet
+</h2>
+
+<p>
+Download notes to see them here
+</p>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<script>
+
+const search =
+document.getElementById(
+"search"
+);
+
+const semester =
+document.getElementById(
+"semester"
+);
+
+const subject =
+document.getElementById(
+"subject"
+);
+
+const items =
+document.querySelectorAll(
+".note-item"
+);
+
+function filter(){
+
+items.forEach(item=>{
+
+const title =
+item.dataset.title;
+
+const sem =
+item.dataset.sem;
+
+const sub =
+item.dataset.sub;
+
+const match =
+
+title.includes(
+search.value.toLowerCase()
+)
+
+&&
+
+(
+semester.value===""
+||
+
+semester.value===sem
+)
+
+&&
+
+(
+subject.value===""
+
+||
+
+subject.value===sub
+);
+
+item.style.display =
+match
+?
+"flex"
+:
+"none";
+
+});
+
+}
+
+search.addEventListener(
+"input",
+filter
+);
+
+semester.addEventListener(
+"change",
+filter
+);
+
+subject.addEventListener(
+"change",
+filter
+);
+
+</script>
+
+</body>
+</html>

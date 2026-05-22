@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - MCA NotesHub</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
+
+body{
+  display:flex;
+  background:#f3f4f6;
+  color:#111827;
+}
+
+
+
+.sidebar{
+  width:230px;
+  height:100vh;
+  background:white;
+  padding:20px;
+  border-right:1px solid #d1d5db;
+}
+
+.sidebar h2{
+  color:#111827;
+  margin-bottom:25px;
+}
+
+.sidebar a{
+  display:block;
+  text-decoration:none;
+  color:#374151;
+  margin:10px 0;
+  padding:10px 12px;
+  border-radius:6px;
+  transition:0.3s;
+}
+
+.sidebar a:hover{
+  background:#e5e7eb;
+}
+
+
+
+.main{
+  flex:1;
+  padding:25px;
+}
+
+
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.topbar h1{
+  font-size:28px;
+}
+
+.logout{
+  background:#374151;
+  color:white;
+  border:none;
+  padding:10px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+  margin-bottom:30px;
+}
+
+.card{
+  background:white;
+  border:1px solid #d1d5db;
+  padding:20px;
+  border-radius:10px;
+  font-size:18px;
+  font-weight:600;
+}
+
+
+
+.section{
+  background:white;
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:25px;
+  overflow-x:auto;
+}
+
+.section h2{
+  margin-bottom:15px;
+}
+
+
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.table th,
+.table td{
+  padding:12px;
+  border-bottom:1px solid #e5e7eb;
+  text-align:left;
+}
+
+.table th{
+  color:#111827;
+  background:#f9fafb;
+}
+
+
+.btn{
+  padding:7px 12px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+  margin-right:5px;
+}
+
+.approve{
+  background:#22c55e;
+  color:white;
+}
+
+.reject{
+  background:#ef4444;
+  color:white;
+}
+
+.delete{
+  background:#f97316;
+  color:white;
+}
+
+
+
+@media(max-width:768px){
+
+  body{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    width:100%;
+    height:auto;
+  }
+
+  .main{
+    padding:15px;
+  }
+
+  .table{
+    min-width:600px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+
+<div class="sidebar">
+
+  <h2>
+    Admin Panel
+  </h2>
+
+  <a href="{% url 'admin_dashboard' %}">
+    Dashboard
+  </a>
+
+  <a href="{% url 'pending_notes' %}">
+    Pending Notes
+  </a>
+
+  <a href="{% url 'users' %}">
+    Users
+  </a>
+
+  <a href="{% url 'reports' %}">
+    Reports
+  </a>
+
+</div>
+
+
+
+<div class="main">
+
+  
+
+  <div class="topbar">
+
+    <h1>
+      Admin Dashboard
+    </h1>
+
+    <button class="logout">
+      Logout
+    </button>
+
+  </div>
+
+  
+
+  <div class="stats">
+
+    <div class="card">
+       Students: 120
+    </div>
+
+    <div class="card">
+       Teachers: 15
+    </div>
+
+    <div class="card">
+       Total Notes: 300
+    </div>
+
+    <div class="card">
+       Pending: 8
+    </div>
+
+  </div>
+
+  
+
+  <div class="section">
+
+    <h2>
+      Pending Notes Approval
+    </h2>
+
+    <table class="table">
+
+      <tr>
+
+        <th>
+          Title
+        </th>
+
+        <th>
+          Teacher
+        </th>
+
+        <th>
+          Subject
+        </th>
+
+        <th>
+          Action
+        </th>
+
+      </tr>
+
+      <tr>
+
+        <td>
+          DBMS Notes
+        </td>
+
+        <td>
+          Prof. Sharma
+        </td>
+
+        <td>
+          DBMS
+        </td>
+
+        <td>
+
+          <button
+            class="btn approve"
+            onclick="approve(this)"
+          >
+            Approve
+          </button>
+
+          <button
+            class="btn reject"
+            onclick="reject(this)"
+          >
+            Reject
+          </button>
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td>
+          OS Notes
+        </td>
+
+        <td>
+          Prof. Verma
+        </td>
+
+        <td>
+          OS
+        </td>
+
+        <td>
+
+          <button
+            class="btn approve"
+            onclick="approve(this)"
+          >
+            Approve
+          </button>
+
+          <button
+            class="btn reject"
+            onclick="reject(this)"
+          >
+            Reject
+          </button>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+  
+
+  <div class="section">
+
+    <h2>
+      User Management
+    </h2>
+
+    <table class="table">
+
+      <tr>
+
+        <th>
+          Name
+        </th>
+
+        <th>
+          Role
+        </th>
+
+        <th>
+          Action
+        </th>
+
+      </tr>
+
+      <tr>
+
+        <td>
+          Rahul
+        </td>
+
+        <td>
+          Student
+        </td>
+
+        <td>
+
+          <button
+            class="btn delete"
+            onclick="deleteRow(this)"
+          >
+            Remove
+          </button>
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td>
+          Meena
+        </td>
+
+        <td>
+          Teacher
+        </td>
+
+        <td>
+
+          <button
+            class="btn delete"
+            onclick="deleteRow(this)"
+          >
+            Remove
+          </button>
+
+        </td>
+
+      </tr>
+
+    </table>
+
+  </div>
+
+</div>
+
+<script>
+
+function approve(btn){
+
+  alert("Note Approved");
+
+  btn.closest("tr").remove();
+
+}
+
+function reject(btn){
+
+  alert("Note Rejected");
+
+  btn.closest("tr").remove();
+
+}
+
+function deleteRow(btn){
+
+  btn.closest("tr").remove();
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,657 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+
+<title>NotesHub</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+font-family:"Segoe UI",sans-serif;
+
+transition:
+background .3s ease,
+color .3s ease,
+transform .3s ease,
+box-shadow .3s ease,
+border-color .3s ease;
+}
+
+body{
+background:#f3f4f6;
+color:#111827;
+overflow-x:hidden;
+}
+
+/* NAVBAR */
+
+.navbar{
+
+width:100%;
+
+padding:15px 30px;
+
+background:white;
+
+border-bottom:1px solid #d1d5db;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+flex-wrap:wrap;
+
+position:sticky;
+
+top:0;
+
+z-index:100;
+
+backdrop-filter:blur(12px);
+
+}
+
+.logo{
+
+font-size:26px;
+
+font-weight:700;
+
+color:#374151;
+
+}
+
+.nav-links{
+
+display:flex;
+
+gap:12px;
+
+flex-wrap:wrap;
+
+}
+
+.nav-links a{
+
+text-decoration:none;
+
+color:#374151;
+
+padding:10px 14px;
+
+border-radius:8px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.nav-links a:hover{
+
+background:#e5e7eb;
+
+transform:
+translateY(-2px);
+
+}
+
+.nav-links a::after{
+
+content:"";
+
+position:absolute;
+
+left:50%;
+
+bottom:0;
+
+width:0;
+
+height:2px;
+
+background:#374151;
+
+transition:.35s;
+
+transform:
+translateX(-50%);
+
+}
+
+.nav-links a:hover::after{
+
+width:70%;
+
+}
+
+/* HERO */
+
+.hero{
+
+position:relative;
+
+padding:50px 20px;
+
+background:#f9fafb;
+
+overflow:hidden;
+
+min-height:70vh;
+
+display:flex;
+
+align-items:center;
+
+}
+
+.hero::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+right:0;
+
+width:100%;
+height:100%;
+
+background-image:
+url("{% static 'images/bookimage.avif' %}");
+
+background-repeat:no-repeat;
+
+background-position:right center;
+
+background-size:1550px;
+
+opacity:.12;
+
+z-index:0;
+
+animation:
+floatBg 8s ease-in-out infinite;
+
+}
+
+.hero-content{
+
+position:relative;
+
+z-index:1;
+
+max-width:1200px;
+
+margin:auto;
+
+width:100%;
+
+animation:
+fadeUp 1s ease;
+
+}
+
+.hero-text{
+
+max-width:650px;
+
+}
+
+.hero h1{
+
+font-size:68px;
+
+line-height:1.1;
+
+margin-bottom:20px;
+
+}
+
+.hero p{
+
+font-size:19px;
+
+line-height:1.8;
+
+color:#4b5563;
+
+margin-bottom:30px;
+
+}
+
+/* BUTTON */
+
+.hero-buttons{
+
+display:flex;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+}
+
+.secondary-btn{
+
+text-decoration:none;
+
+padding:14px 24px;
+
+border-radius:10px;
+
+background:#374151;
+
+color:white;
+
+font-weight:600;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.secondary-btn:hover{
+
+transform:
+translateY(-3px)
+scale(1.03);
+
+box-shadow:
+0 10px 25px rgba(55,65,81,.25);
+
+}
+
+.secondary-btn::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:-120%;
+
+width:100%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.3),
+transparent
+);
+
+transition:.6s;
+
+}
+
+.secondary-btn:hover::before{
+
+left:120%;
+
+}
+
+/* FEATURES */
+
+.section{
+
+padding:60px 20px;
+
+}
+
+.section-title{
+
+text-align:center;
+
+font-size:34px;
+
+margin-bottom:35px;
+
+}
+
+.features{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(230px,1fr));
+
+gap:20px;
+
+max-width:1200px;
+
+margin:auto;
+
+}
+
+.feature-box{
+
+background:white;
+
+padding:25px;
+
+border-radius:14px;
+
+border:1px solid #d1d5db;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.feature-box:hover{
+
+transform:
+translateY(-8px);
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.feature-box::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:0;
+
+width:100%;
+
+height:4px;
+
+background:#374151;
+
+transform:scaleX(0);
+
+transition:.35s;
+
+}
+
+.feature-box:hover::before{
+
+transform:scaleX(1);
+
+}
+
+.feature-box h3{
+
+margin-bottom:12px;
+
+font-size:22px;
+
+}
+
+.feature-box p{
+
+line-height:1.7;
+
+color:#4b5563;
+
+}
+
+/* FOOTER */
+
+.footer{
+
+background:white;
+
+border-top:1px solid #d1d5db;
+
+padding:25px;
+
+text-align:center;
+
+color:#6b7280;
+
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:
+translateY(50px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
+
+}
+
+@keyframes floatBg{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-15px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.navbar{
+
+flex-direction:column;
+
+gap:15px;
+
+padding:20px;
+
+}
+
+.hero{
+
+padding:80px 20px;
+
+min-height:60vh;
+
+}
+
+.hero::before{
+
+background-size:cover;
+
+background-position:center;
+
+opacity:.12;
+
+animation:none;
+
+}
+
+.hero h1{
+
+font-size:44px;
+
+}
+
+.hero p{
+
+font-size:16px;
+
+}
+
+.section{
+
+padding:50px 20px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+NotesHub
+</div>
+
+<div class="nav-links">
+
+<a href="{% url 'home' %}">
+Home
+</a>
+
+<a href="{% url 'login' %}">
+Login
+</a>
+
+<a href="{% url 'signup' %}">
+Signup
+</a>
+
+<a href="{% url 'contact' %}">
+Contact
+</a>
+
+</div>
+
+</nav>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<div class="hero-text">
+
+<h1>
+Notes Sharing Platform
+</h1>
+
+<p>
+
+Download notes, upload study materials,
+ask questions and collaborate with
+students and teachers in one place.
+
+</p>
+
+<div class="hero-buttons">
+
+<a
+href="{% url 'about' %}"
+class="secondary-btn"
+>
+
+About Us
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2 class="section-title">
+
+Platform Features
+
+</h2>
+
+<div class="features">
+
+<div class="feature-box">
+
+<h3>Easy Downloads</h3>
+
+<p>
+Download notes instantly without complicated process.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<h3>Notes Upload</h3>
+
+<p>
+Teachers can upload PDFs and study materials easily.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<h3>Questions System</h3>
+
+<p>
+Students can ask doubts directly to teachers.
+</p>
+
+</div>
+
+<div class="feature-box">
+
+<h3>Secure Access</h3>
+
+<p>
+Role based dashboard for students and teachers.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<footer class="footer">
+
+NotesHub • Built for Students
+
+</footer>
+
+</body>
+
+</html>

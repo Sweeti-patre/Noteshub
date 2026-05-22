@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update Profile - MCA NotesHub</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
+
+body{
+  background:#f3f4f6;
+  color:#111827;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+}
+
+.container{
+  width:100%;
+  max-width:420px;
+  background:white;
+  padding:30px;
+  border-radius:16px;
+  border:1px solid #d1d5db;
+  box-shadow:0 4px 20px rgba(0,0,0,0.08);
+}
+
+h2{
+  text-align:center;
+  margin-bottom:20px;
+  color:#111827;
+  font-size:28px;
+}
+
+.profile-img{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.profile-img img{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid #d1d5db;
+}
+
+.profile-img input{
+  margin-top:10px;
+  color:#4b5563;
+}
+
+.role{
+  text-align:center;
+  margin-bottom:20px;
+  color:#6b7280;
+  font-size:14px;
+}
+
+form{
+  display:flex;
+  flex-direction:column;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:14px;
+  border-radius:8px;
+  border:1px solid #d1d5db;
+  background:#f9fafb;
+  color:#111827;
+  outline:none;
+  font-size:15px;
+}
+
+input:focus{
+  border-color:#111827;
+}
+
+input::placeholder{
+  color:#9ca3af;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#111827;
+  color:white;
+  cursor:pointer;
+  font-weight:600;
+  font-size:15px;
+  transition:0.3s;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+.msg{
+  text-align:center;
+  font-size:14px;
+  margin-top:15px;
+  display:none;
+}
+
+.success{
+  color:#16a34a;
+}
+
+.error{
+  color:#dc2626;
+}
+
+.back{
+  text-align:center;
+  margin-top:20px;
+}
+
+.back a{
+  text-decoration:none;
+  color:#111827;
+  font-size:14px;
+  font-weight:600;
+}
+
+@media(max-width:500px){
+
+  .container{
+    padding:22px;
+  }
+
+  h2{
+    font-size:24px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>Update Profile</h2>
+
+  <div class="profile-img">
+
+    <img
+      id="preview"
+      src="https://via.placeholder.com/90"
+      alt="Profile"
+    >
+
+    <br>
+
+    <input
+      type="file"
+      onchange="previewImage(event)"
+    >
+
+  </div>
+
+  <div class="role">
+
+    Role:
+    Student
+
+  </div>
+
+  <form id="form">
+
+    <input
+      type="text"
+      id="name"
+      placeholder="Full Name"
+      value="Shubham"
+      required
+    >
+
+    <input
+      type="email"
+      id="email"
+      placeholder="Email"
+      value="shubham@email.com"
+      required
+    >
+
+    <input
+      type="password"
+      id="password"
+      placeholder="New Password"
+    >
+
+    <input
+      type="password"
+      id="confirm"
+      placeholder="Confirm Password"
+    >
+
+    <button type="submit">
+
+      Update Profile
+
+    </button>
+
+  </form>
+
+  <div id="msg" class="msg"></div>
+
+  <div class="back">
+
+    <a href="#">
+      ← Back to Profile
+    </a>
+
+  </div>
+
+</div>
+
+<script>
+
+function previewImage(event){
+
+  const reader =
+  new FileReader();
+
+  reader.onload = function(){
+
+    document.getElementById("preview").src =
+    reader.result;
+
+  };
+
+  reader.readAsDataURL(
+    event.target.files[0]
+  );
+
+}
+
+
+
+document.getElementById("form")
+.addEventListener("submit", function(e){
+
+  e.preventDefault();
+
+  const pass =
+  document.getElementById("password").value;
+
+  const confirm =
+  document.getElementById("confirm").value;
+
+  const msg =
+  document.getElementById("msg");
+
+
+
+  if(pass !== confirm){
+
+    msg.style.display = "block";
+
+    msg.className =
+    "msg error";
+
+    msg.innerText =
+    "Passwords do not match";
+
+    return;
+
+  }
+
+
+
+  msg.style.display = "block";
+
+  msg.className =
+  "msg success";
+
+  msg.innerText =
+  "Profile updated successfully";
+
+});
+
+</script>
+
+</body>
+</html>

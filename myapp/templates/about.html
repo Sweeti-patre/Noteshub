@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - MCA NotesHub</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+body{
+    background:#f3f4f6;
+    color:#111827;
+}
+
+.navbar{
+    width:100%;
+    padding:15px 30px;
+    background:white;
+    border-bottom:1px solid #d1d5db;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:#374151;
+}
+
+.nav-links{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#374151;
+    padding:8px 12px;
+    border-radius:6px;
+    transition:0.3s;
+}
+
+.nav-links a:hover{
+    background:#e5e7eb;
+}
+
+.hero{
+    width:100%;
+    padding:50px 10px 30px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:20px;
+    color:#111827;
+}
+
+.hero p{
+    max-width:800px;
+    margin:auto;
+    color:#4b5563;
+    line-height:1.8;
+    font-size:18px;
+}
+
+.about-section{
+    width:100%;
+    padding:10px 20px;
+}
+
+.about-container{
+    max-width:1200px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.about-card{
+    background:white;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    padding:25px;
+}
+
+.about-card h2{
+    margin-bottom:12px;
+    color:#111827;
+}
+
+.about-card p{
+    color:#4b5563;
+    line-height:1.7;
+}
+
+.stats{
+    padding:40px 20px;
+}
+
+.stats-container{
+    max-width:1100px;
+    margin:auto;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.stat-box{
+    background:white;
+    border:1px solid #d1d5db;
+    border-radius:12px;
+    padding:25px;
+    text-align:center;
+}
+
+.stat-box h2{
+    font-size:36px;
+    margin-bottom:10px;
+    color:#111827;
+}
+
+.stat-box p{
+    color:#4b5563;
+}
+
+.footer{
+    margin-top:50px;
+    background:white;
+    border-top:1px solid #d1d5db;
+    text-align:center;
+    padding:20px;
+    color:#6b7280;
+}
+
+@media(max-width:768px){
+
+    .navbar{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        NotesHub
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'notes_list' %}">
+            Notes
+        </a>
+
+
+        <a href="{% url 'contact' %}">
+            Contact
+        </a>
+
+        <a href="{% url 'login' %}">
+            Login
+        </a>
+
+    </div>
+
+</nav>
+
+<section class="hero">
+
+    <h1>
+        About NotesHub
+    </h1>
+
+    <p>
+        NotesHub is a collaborative learning platform designed for students.
+        Students can download notes, ask questions, and access study materials,
+        while teachers can upload educational resources and guide students efficiently.
+    </p>
+
+</section>
+
+<section class="about-section">
+
+    <div class="about-container">
+
+        <div class="about-card">
+
+            <h2>
+                 Notes Sharing
+            </h2>
+
+            <p>
+                Access semester-wise notes, PDFs, and study material uploaded by teachers
+                and verified by administrators.
+            </p>
+
+        </div>
+
+        <div class="about-card">
+
+            <h2>
+                 Question System
+            </h2>
+
+            <p>
+                Students can ask academic questions and receive answers from teachers
+                and fellow students.
+            </p>
+
+        </div>
+
+        <div class="about-card">
+
+            <h2>
+                 Secure Platform
+            </h2>
+
+            <p>
+                Role-based dashboards ensure secure and organized access
+                for students, teachers, and administrators.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="stats">
+
+    <div class="stats-container">
+
+        <div class="stat-box">
+
+            <h2>
+                500+
+            </h2>
+
+            <p>
+                Study Notes
+            </p>
+
+        </div>
+
+        <div class="stat-box">
+
+            <h2>
+                1000+
+            </h2>
+
+            <p>
+                Students
+            </p>
+
+        </div>
+
+        <div class="stat-box">
+
+            <h2>
+                50+
+            </h2>
+
+            <p>
+                Teachers
+            </p>
+
+        </div>
+
+        <div class="stat-box">
+
+            <h2>
+                24/7
+            </h2>
+
+            <p>
+                Learning Access
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer class="footer">
+
+    © 2026  NotesHub • Built for  Students
+
+</footer>
+
+</body>
+</html>

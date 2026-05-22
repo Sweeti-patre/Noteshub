@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Logged Out - NotesHub</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+body{
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#f3f4f6;
+
+    padding:20px;
+}
+
+
+
+.box{
+    width:100%;
+    max-width:420px;
+
+    background:white;
+
+    border:1px solid #d1d5db;
+
+    border-radius:14px;
+
+    padding:40px 30px;
+
+    text-align:center;
+}
+
+
+
+.icon{
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+
+
+h1{
+    font-size:30px;
+    color:#111827;
+    margin-bottom:12px;
+}
+
+
+
+p{
+    color:#6b7280;
+    line-height:1.6;
+    margin-bottom:30px;
+}
+
+
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    text-decoration:none;
+
+    padding:12px 18px;
+
+    border-radius:8px;
+
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+
+
+.login-btn{
+    background:#374151;
+    color:white;
+}
+
+
+.home-btn{
+    background:#e5e7eb;
+    color:#111827;
+}
+
+.btn:hover{
+    opacity:0.9;
+}
+
+
+
+@media(max-width:500px){
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+
+
+    <h1>
+        Logged Out
+    </h1>
+
+    <p>
+        You have successfully logged out from MCA NotesHub.
+    </p>
+
+    <div class="buttons">
+
+        <a
+            href="{% url 'login' %}"
+            class="btn login-btn"
+        >
+            Login Again
+        </a>
+
+        <a
+            href="{% url 'home' %}"
+            class="btn home-btn"
+        >
+            Go Home
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

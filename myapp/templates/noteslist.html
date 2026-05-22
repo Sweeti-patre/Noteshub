@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Uploads - MCA NotesHub</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
+
+body{
+  background:#0f172a;
+  color:#e2e8f0;
+  min-height:100vh;
+}
+
+
+
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 30px;
+  background:#020617;
+  border-bottom:1px solid #1e293b;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.header h2{
+  color:#38bdf8;
+}
+
+.upload-btn{
+  background:#38bdf8;
+  color:black;
+  padding:10px 16px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+
+
+.topbar{
+  padding:20px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.topbar input,
+.topbar select{
+  padding:10px 14px;
+  border-radius:8px;
+  border:none;
+  outline:none;
+  background:#1e293b;
+  color:white;
+  min-width:220px;
+}
+
+
+.list{
+  padding:20px;
+  max-width:1100px;
+  margin:auto;
+}
+
+
+
+.note-item{
+  background:#020617;
+  padding:18px;
+  border-radius:12px;
+  border:1px solid #1e293b;
+  margin-bottom:15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  transition:0.3s;
+}
+
+.note-item:hover{
+  transform:translateY(-2px);
+  border-color:#38bdf8;
+}
+
+
+
+.note-info{
+  flex:1;
+}
+
+.note-info h3{
+  margin-bottom:6px;
+  font-size:18px;
+}
+
+.note-info p{
+  color:#94a3b8;
+  font-size:14px;
+  margin-bottom:6px;
+}
+
+.note-info span{
+  font-size:12px;
+  color:#64748b;
+}
+
+
+
+.status{
+  font-size:12px;
+  padding:4px 10px;
+  border-radius:6px;
+  margin-left:10px;
+  font-weight:600;
+}
+
+.pending{
+  background:#facc15;
+  color:black;
+}
+
+.approved{
+  background:#22c55e;
+  color:white;
+}
+
+.rejected{
+  background:#ef4444;
+  color:white;
+}
+
+
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.actions a,
+.actions button{
+  padding:8px 14px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  text-decoration:none;
+  font-size:13px;
+  transition:0.3s;
+}
+
+.view{
+  background:#38bdf8;
+  color:black;
+}
+
+.edit{
+  background:#1e293b;
+  color:#38bdf8;
+  border:1px solid #38bdf8;
+}
+
+.delete{
+  background:#ef4444;
+  color:white;
+}
+
+.actions a:hover,
+.actions button:hover{
+  opacity:0.9;
+}
+
+
+
+.empty{
+  text-align:center;
+  padding:50px;
+  color:#64748b;
+  font-size:18px;
+}
+
+
+@media(max-width:768px){
+
+  .header{
+    flex-direction:column;
+    gap:12px;
+    text-align:center;
+  }
+
+  .note-item{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .actions{
+    width:100%;
+  }
+
+  .actions a,
+  .actions button{
+    flex:1;
+    text-align:center;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+
+<div class="header">
+
+  <h2>📂 My Uploads</h2>
+
+  <a href="{% url 'my_upload' %}">
+    <button class="upload-btn">
+      + Upload Notes
+    </button>
+  </a>
+
+</div>
+
+
+
+
+<div class="topbar">
+
+  <input
+    type="text"
+    id="search"
+    placeholder="Search uploads..."
+  >
+
+  <select id="status">
+
+    <option value="">
+      All Status
+    </option>
+
+    <option value="Approved">
+      Approved
+    </option>
+
+    <option value="Pending">
+      Pending
+    </option>
+
+    <option value="Rejected">
+      Rejected
+    </option>
+
+  </select>
+
+</div>
+
+
+
+
+<div class="list" id="list">
+
+  {% for note in notes %}
+
+  <div
+    class="note-item"
+    data-title="{{ note.title|lower }}"
+    data-status="{{ note.status }}"
+  >
+
+    <div class="note-info">
+
+      <h3>
+
+        {{ note.title }}
+
+        {% if note.status == 'Approved' %}
+        <span class="status approved">
+          Approved
+        </span>
+        {% elif note.status == 'Pending' %}
+        <span class="status pending">
+          Pending
+        </span>
+        {% else %}
+        <span class="status rejected">
+          Rejected
+        </span>
+        {% endif %}
+
+      </h3>
+
+      <p>
+        {{ note.subject }}
+      </p>
+
+      <span>
+        Uploaded on {{ note.uploaded_at }}
+      </span>
+
+    </div>
+
+
+    <div class="actions">
+
+      <a
+        href="{{ note.file.url }}"
+        target="_blank"
+        class="view"
+      >
+        View
+      </a>
+
+      <a
+        href="#"
+        class="edit"
+      >
+        Edit
+      </a>
+
+      <button
+        class="delete"
+        onclick="removeItem(this)"
+      >
+        Delete
+      </button>
+
+    </div>
+
+  </div>
+
+  {% empty %}
+
+  <div class="empty">
+    No uploads yet 📂
+  </div>
+
+  {% endfor %}
+
+</div>
+
+
+<script>
+
+const search =
+document.getElementById("search");
+
+const status =
+document.getElementById("status");
+
+
+function filterNotes(){
+
+  const items =
+  document.querySelectorAll(".note-item");
+
+  let visible = 0;
+
+  items.forEach(item => {
+
+    const title =
+    item.dataset.title;
+
+    const st =
+    item.dataset.status;
+
+    const searchVal =
+    search.value.toLowerCase();
+
+    const statusVal =
+    status.value;
+
+    const match =
+
+      title.includes(searchVal)
+
+      &&
+
+      (statusVal === "" || st === statusVal);
+
+    item.style.display =
+    match ? "flex" : "none";
+
+    if(match){
+      visible++;
+    }
+
+  });
+
+}
+
+
+function removeItem(btn){
+
+  btn.parentElement
+  .parentElement
+  .remove();
+
+}
+
+
+search.addEventListener(
+  "input",
+  filterNotes
+);
+
+status.addEventListener(
+  "change",
+  filterNotes
+);
+
+</script>
+
+</body>
+</html>

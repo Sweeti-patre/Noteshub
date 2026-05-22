@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Dashboard - MCA NotesHub</title>
+
+<style>
+
+html{
+    scroll-behavior:smooth;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+body{
+    background:#f3f4f6;
+    color:#111827;
+    overflow-x:hidden;
+}
+
+
+
+.menu-btn{
+
+    display:none;
+
+    position:fixed;
+
+    top:15px;
+    left:15px;
+
+    width:45px;
+    height:45px;
+
+    border:none;
+
+    border-radius:10px;
+
+    color:black;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    z-index:2000;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+
+
+
+.overlay{
+
+    display:none;
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.4);
+
+    z-index:1400;
+}
+
+.overlay.show{
+
+    display:block;
+}
+
+.sidebar{
+
+    width:230px;
+
+    height:100vh;
+
+    background:white;
+
+    padding:80px 20px 20px;
+
+    border-right:1px solid #d1d5db;
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    overflow-y:auto;
+
+    transition:0.3s;
+
+    z-index:1500;
+}
+
+.sidebar h2{
+
+    color:#111827;
+
+    margin-bottom:30px;
+}
+
+.sidebar a{
+
+    display:block;
+
+    color:#4b5563;
+
+    text-decoration:none;
+
+    margin:10px 0;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    transition:0.3s;
+}
+
+.sidebar a:hover{
+
+    background:#e5e7eb;
+
+    color:#111827;
+}
+
+
+
+.main{
+
+    margin-left:230px;
+
+    width:calc(100% - 230px);
+
+    padding:25px;
+}
+
+
+
+.topbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin-bottom:25px;
+}
+
+.topbar h1{
+
+    font-size:30px;
+}
+
+.top-actions{
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+}
+
+.logout,
+.profile-btn{
+
+    padding:10px 16px;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+.logout{
+
+    background:#dc2626;
+
+    color:white;
+}
+
+.profile-btn{
+
+    background:#111827;
+
+    color:white;
+}
+
+
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:15px;
+
+    margin-bottom:30px;
+}
+
+.card{
+
+    background:white;
+
+    padding:22px;
+
+    border-radius:12px;
+
+    border:1px solid #d1d5db;
+}
+
+.card h3{
+
+    color:#6b7280;
+
+    margin-bottom:10px;
+}
+
+.card p{
+
+    font-size:26px;
+
+    font-weight:700;
+}
+
+
+
+.search-box{
+
+    margin-bottom:20px;
+
+    position:relative;
+
+    z-index:1;
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    background:white;
+
+    outline:none;
+}
+
+
+.filters{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:25px;
+
+    position:relative;
+
+    z-index:1;
+}
+
+.filters select{
+
+    flex:1;
+
+    min-width:200px;
+
+    padding:14px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    background:white;
+
+    outline:none;
+}
+
+
+
+.notes{
+
+    position:relative;
+
+    z-index:1;
+}
+
+.notes-header{
+
+    margin-bottom:20px;
+}
+
+.note-card{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    border:1px solid #d1d5db;
+
+    margin-bottom:20px;
+}
+
+.note-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+}
+
+.note-left h3{
+
+    margin-bottom:10px;
+
+    font-size:22px;
+}
+
+.note-left p{
+
+    color:#6b7280;
+
+    margin-bottom:6px;
+}
+
+
+
+.note-actions{
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+}
+
+.download-btn,
+.view-btn{
+
+    padding:10px 14px;
+
+    border-radius:8px;
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+.download-btn{
+
+    background:#111827;
+
+    color:white;
+}
+
+.view-btn{
+
+    background:#e5e7eb;
+
+    color:#111827;
+}
+
+
+
+.question-box{
+
+    margin-top:20px;
+
+    border-top:1px solid #e5e7eb;
+
+    padding-top:20px;
+}
+
+.question-box textarea{
+
+    width:100%;
+
+    padding:14px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    resize:none;
+
+    outline:none;
+}
+
+.question-box button{
+
+    margin-top:12px;
+
+    padding:12px 18px;
+
+    background:#111827;
+
+    color:white;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-weight:600;
+}
+
+
+
+.empty{
+
+    background:white;
+
+    padding:35px;
+
+    border-radius:12px;
+
+    border:1px solid #d1d5db;
+
+    text-align:center;
+
+    color:#6b7280;
+}
+
+
+
+@media(max-width:768px){
+
+    .menu-btn{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+    }
+
+    .sidebar{
+
+        left:-250px;
+    }
+
+    .sidebar.show{
+
+        left:0;
+    }
+
+
+    .main{
+
+        margin-left:0;
+
+        width:100%;
+
+        padding:90px 15px 20px;
+    }
+
+    .topbar{
+
+        margin-top:10px;
+    }
+
+    .topbar h1{
+
+        font-size:24px;
+    }
+
+    .note-top{
+
+        flex-direction:column;
+    }
+
+    .note-actions{
+
+        width:100%;
+    }
+
+    .download-btn,
+    .view-btn{
+
+        width:100%;
+
+        text-align:center;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<button
+class="menu-btn"
+onclick="toggleSidebar()"
+>
+☰
+</button>
+
+
+
+<div
+class="overlay"
+id="overlay"
+onclick="closeSidebar()"
+>
+</div>
+
+
+
+<div class="sidebar" id="sidebar">
+
+    <h2>
+        NotesHub
+    </h2>
+
+    <a href="{% url 'student_dashboard' %}">
+        Dashboard
+    </a>
+
+    <a href="{% url 'my_downloads' %}">
+        My Downloads
+    </a>
+
+    <a href="{% url 'notifications' %}">
+        Notifications
+    </a>
+
+    <a href="{% url 'profile' %}">
+        Profile
+    </a>
+
+    <a href="{% url 'logout' %}">
+        Logout
+    </a>
+
+</div>
+
+
+
+<div class="main">
+
+    
+
+    <div class="topbar">
+
+        <h1>
+
+            Welcome,
+            {{ request.user.username }}
+
+        </h1>
+
+        <div class="top-actions">
+
+            <a
+            href="{% url 'profile' %}"
+            class="profile-btn"
+            >
+                Profile
+            </a>
+
+            <a
+            href="{% url 'logout' %}"
+            class="logout"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+   
+
+    <div class="stats">
+
+        <div class="card">
+
+            <h3>
+                Available Notes
+            </h3>
+
+            <p>
+                {{ notes.count }}
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>
+                Your Semester
+            </h3>
+
+            <p>
+                <p>
+
+{{ student.semester }}
+
+</p>
+            </p>
+
+        </div>
+
+        <div class="card">
+
+<h3>
+My Downloads
+</h3>
+
+<p>
+
+{{ downloads_count }}
+
+</p>
+
+</div>
+
+    </div>
+
+    
+
+    
+
+    
+
+    <div class="filters">
+
+        <select id="subjectFilter">
+
+            <option value="">
+                All Subjects
+            </option>
+
+            <option value="dbms">
+                DBMS
+            </option>
+
+            <option value="os">
+                Operating System
+            </option>
+
+            <option value="cn">
+                Computer Network
+            </option>
+
+            <option value="python">
+                Python
+            </option>
+
+            <option value="java">
+                Java
+            </option>
+
+        </select>
+
+        <select id="semesterFilter">
+
+            <option value="">
+                All Semester
+            </option>
+
+            <option value="sem 1">
+                Sem 1
+            </option>
+
+            <option value="sem 2">
+                Sem 2
+            </option>
+
+            <option value="sem 3">
+                Sem 3
+            </option>
+
+            <option value="sem 4">
+                Sem 4
+            </option>
+
+        </select>
+
+    </div>
+
+    
+
+    <div class="notes">
+
+        <div class="notes-header">
+
+            <h2>
+                Available Notes
+            </h2>
+
+        </div>
+
+        <div id="notesContainer">
+
+            {% for note in notes %}
+
+            <div
+            class="note-card"
+            data-title="{{ note.title|lower }}"
+            data-subject="{{ note.subject|lower }}"
+            data-semester="{{ note.semester|lower }}"
+            >
+
+                <div class="note-top">
+
+                    <div class="note-left">
+
+                        <h3>
+                            {{ note.title }}
+                        </h3>
+
+                        <p>
+                            Subject:
+                            {{ note.subject }}
+                        </p>
+
+                        <p>
+                            Semester:
+                            {{ note.semester }}
+                        </p>
+
+                        <p>
+                            Uploaded By:
+                            {{ note.teacher.username }}
+                        </p>
+
+                        <p>
+                            Uploaded:
+                            {{ note.uploaded_at }}
+                        </p>
+
+                    </div>
+
+                    <div class="note-actions">
+
+                        <a
+                        href="{{ note.file.url }}"
+                        target="_blank"
+                        class="view-btn"
+                        >
+                            View
+                        </a>
+
+                        <a
+                        href="{% url 'download_note' note.id %}"
+                        class="download-btn"
+                        >
+                            Download
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="question-box">
+
+                    <form
+                    method="POST"
+                    action="{% url 'ask_question' note.id %}"
+                    >
+
+                        {% csrf_token %}
+
+                        <textarea
+                        name="question"
+                        rows="3"
+                        placeholder="Ask question about this note..."
+                        required
+                        ></textarea>
+
+                        <button type="submit">
+
+                            Ask Question
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="empty">
+
+                <h3>
+                    No Notes Available
+                </h3>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+
+
+function toggleSidebar(){
+
+    document
+    .getElementById("sidebar")
+    .classList.toggle("show");
+
+    document
+    .getElementById("overlay")
+    .classList.toggle("show");
+
+}
+
+function closeSidebar(){
+
+    document
+    .getElementById("sidebar")
+    .classList.remove("show");
+
+    document
+    .getElementById("overlay")
+    .classList.remove("show");
+
+}
+
+
+
+const sidebarLinks =
+document.querySelectorAll(".sidebar a");
+
+sidebarLinks.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        if(window.innerWidth <= 768){
+
+            closeSidebar();
+
+        }
+
+    });
+
+});
+
+
+
+const searchInput =
+document.getElementById("searchInput");
+
+const subjectFilter =
+document.getElementById("subjectFilter");
+
+const semesterFilter =
+document.getElementById("semesterFilter");
+
+const noteCards =
+document.querySelectorAll(".note-card");
+
+function filterNotes(){
+
+    const searchValue =
+    searchInput.value.toLowerCase();
+
+    const subjectValue =
+    subjectFilter.value.toLowerCase();
+
+    const semesterValue =
+    semesterFilter.value.toLowerCase();
+
+    noteCards.forEach(card => {
+
+        const title =
+        card.dataset.title;
+
+        const subject =
+        card.dataset.subject;
+
+        const semester =
+        card.dataset.semester;
+
+        const matchSearch =
+
+            title.includes(searchValue)
+
+            ||
+
+            subject.includes(searchValue);
+
+        const matchSubject =
+
+            subjectValue === ""
+
+            ||
+
+            subject.includes(subjectValue);
+
+        const matchSemester =
+
+            semesterValue === ""
+
+            ||
+
+            semester.includes(semesterValue);
+
+        if(
+
+            matchSearch
+
+            &&
+
+            matchSubject
+
+            &&
+
+            matchSemester
+
+        ){
+
+            card.style.display = "block";
+
+        }
+
+        else{
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+searchInput.addEventListener(
+    "keyup",
+    filterNotes
+);
+
+subjectFilter.addEventListener(
+    "change",
+    filterNotes
+);
+
+semesterFilter.addEventListener(
+    "change",
+    filterNotes
+);
+
+</script>
+
+</body>
+
+</html>
